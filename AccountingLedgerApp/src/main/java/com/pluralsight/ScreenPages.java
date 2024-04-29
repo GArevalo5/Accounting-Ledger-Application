@@ -1,22 +1,32 @@
 package com.pluralsight;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class ScreenPages {
     private Scanner userInput = new Scanner(System.in);
-    //private Logger logger = new Logger();
+    //private Logger logger = new Logger("Error log.csv");
 
     //homeScreenVariables
     private String date;
     private String time;
     private String description;
     private String vendor;
-    private double amount;
+    private Double amount;
+
     //Ledger variables
     private String fullList;
     private Double deposits;
-    private double payments;
+    private Double payments;
+
     //Report Variables
+    private String monthToDate;
+    private String previousMonth;
+    private String yearToDate;
+    private String previousYear;
+    private String byVendor;
 
     //homeScreenConstructor
     public ScreenPages(String date, String time, String description, String vendor, double amount) {
@@ -99,8 +109,57 @@ public class ScreenPages {
         this.payments = payments;
     }
 
-    public ScreenPages() {
+    //Reports Constructor
+    public ScreenPages(String monthToDate, String previousMonth, String yearToDate, String previousYear, String byVendor) {
+        this.monthToDate = monthToDate;
+        this.previousMonth = previousMonth;
+        this.yearToDate = yearToDate;
+        this.previousYear = previousYear;
+        this.byVendor = byVendor;
+    }
 
+    //Reports Getter and Setters
+    public String getMonthToDate() {
+        return monthToDate;
+    }
+
+    public void setMonthToDate(String monthToDate) {
+        this.monthToDate = monthToDate;
+    }
+
+    public String getPreviousMonth() {
+        return previousMonth;
+    }
+
+    public void setPreviousMonth(String previousMonth) {
+        this.previousMonth = previousMonth;
+    }
+
+    public String getYearToDate() {
+        return yearToDate;
+    }
+
+    public void setYearToDate(String yearToDate) {
+        this.yearToDate = yearToDate;
+    }
+
+    public String getPreviousYear() {
+        return previousYear;
+    }
+
+    public void setPreviousYear(String previousYear) {
+        this.previousYear = previousYear;
+    }
+
+    public String getByVendor() {
+        return byVendor;
+    }
+
+    public void setByVendor(String byVendor) {
+        this.byVendor = byVendor;
+    }
+
+    public ScreenPages() {
         //homeScreen page
         while (true) {
             try {
@@ -109,8 +168,8 @@ public class ScreenPages {
                 System.out.println("2) Make a payment");
                 System.out.println("3) Ledger");
                 System.out.println("4) Exit");
-                userInput.nextInt();
-
+                System.out.println("Enter input: ");
+                // For some reason registers this line as the input. Will keep it for now
                 int choice = userInput.nextInt();
 
                 switch (choice) {
@@ -151,12 +210,14 @@ public class ScreenPages {
             try {
                 System.out.println("Ledger main menu");
                 System.out.println();
-                System.out.println(" Please choose a option from below using the numbers: ");
-                userInput.nextInt();
+                System.out.println(" Please choose a option from below using the numbers. ");
                 System.out.println("1) Add Deposit");
                 System.out.println("2) Make a payment");
                 System.out.println("3) Ledger");
-                System.out.println("4) Exit");
+                System.out.println("4) Report Screen");
+                System.out.println("5) Return to home Screen");
+                System.out.println("Enter input: ");
+                // Same issue as line 173
                 int choice = userInput.nextInt();
 
                 switch (choice) {
@@ -174,7 +235,7 @@ public class ScreenPages {
                         break;
                     case 4:
                         //reports
-
+                        reportsScreen();
                         break;
                     case 5:
                         //home
@@ -188,7 +249,21 @@ public class ScreenPages {
 
     }
 
+    //Screens from ledger Screen
     public void allInfo() {
+        //need to read transaction.csv
+            File file =new File("transactions.csv");
+        try {
+            Scanner fileScanner = new Scanner(file);
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        //Displays all
+
+
+
+
         System.out.println("test");
     }
 
@@ -199,4 +274,75 @@ public class ScreenPages {
     public void paymentsLedger() {
         System.out.println("test");
     }
+
+    //reports screen
+    public void reportsScreen() {
+        while (true) {
+            try {
+                System.out.println("Report main menu");
+                System.out.println();
+                System.out.println(" Please choose a option from below using the numbers: ");
+                System.out.println("1) Month to date");
+                System.out.println("2) previous months");
+                System.out.println("3) Year to date");
+                System.out.println("4) previous year");
+                System.out.println("5) By vendor");
+                System.out.println("6) Return to Ledger Screen");
+                System.out.println("Enter input: ");
+                // Same issue as line 173
+                int choice = userInput.nextInt();
+
+                switch (choice) {
+                    case 1:
+                        // month to date
+                        monthToDateScreen();
+                        break;
+                    case 2:
+                        //previous months
+                        previousMonthScreen();
+                        break;
+                    case 3:
+                        //year to date
+                        yearToDateScreen();
+                        break;
+                    case 4:
+                        //previous year
+                        previousYearScreen();
+                        break;
+                    case 5:
+                        //by vendor
+                        byVendorScreen();
+                    case 6:
+                        //ledger page
+                        System.out.println("Returning to the Ledger screen");
+                        return;
+                }
+            } catch (Exception ex) {
+                System.out.println("Please enter a correct input");
+
+            }
+        }
+    }
+
+    // reports screen
+    public static void monthToDateScreen() {
+        System.out.println("test");
+    }
+
+    public static void previousMonthScreen() {
+        System.out.println("test");
+    }
+
+    public static void yearToDateScreen() {
+        System.out.println("test");
+    }
+
+    public static void previousYearScreen() {
+        System.out.println("test");
+    }
+
+    public static void byVendorScreen() {
+        System.out.println("test");
+    }
+
 }
