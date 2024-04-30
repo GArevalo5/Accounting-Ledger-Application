@@ -76,7 +76,7 @@ public class ScreenPages {
             //deposit
             System.out.println("Please enter amount deposited: ");
             double amount = userInput.nextDouble();
-            bufferedWriter.write(String.valueOf(amount));
+            bufferedWriter.write(String.valueOf((amount)));
             bufferedWriter.newLine();
             System.out.println();
             System.out.println("Information recorded");
@@ -187,12 +187,41 @@ public class ScreenPages {
 
     public void depositsLedger() {
         File file = new File("files/transactions.csv");
-
+        try {
+            Scanner fileScanner = new Scanner(file);
+            while (fileScanner.hasNextLine()) {
+                String line = fileScanner.nextLine();
+                String[] deposits = line.split("\\|");
+               double rows = Double.parseDouble(deposits[4].trim());
+               if (rows > 0){
+                   System.out.println(line);
+                   System.out.println("------------------------------------------------------------------------");
+            }
+            }
+            fileScanner.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
     public void paymentsLedger() {
         File file = new File("files/transactions.csv");
+        try {
+            Scanner fileScanner = new Scanner(file);
+            while (fileScanner.hasNextLine()) {
+                String line = fileScanner.nextLine();
+                String[] deposits = line.split("|");
+                double rows = Double.parseDouble(deposits[4].trim());
+                if (rows < 0){
+                    System.out.println(line);
+                    System.out.println("------------------------------------------------------------------------");
+                }
+            }
+            fileScanner.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
