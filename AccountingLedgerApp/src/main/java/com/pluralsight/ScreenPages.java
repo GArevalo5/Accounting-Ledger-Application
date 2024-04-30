@@ -1,7 +1,8 @@
 package com.pluralsight;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
@@ -10,10 +11,10 @@ public class ScreenPages {
     //private Logger logger = new Logger("Error log.csv");
 
     //homeScreenVariables
-    private String date;
-    private String time;
-    private String description;
-    private String vendor;
+    private String date = " ";
+    private String time = " ";
+    private String description = " ";
+    private String vendor = " ";
     private Double amount;
 
     //Ledger variables
@@ -197,7 +198,41 @@ public class ScreenPages {
     }
 
     public void depositScreen() {
-        System.out.println("test");
+        String filePath = "Files/transactions.csv";
+        File file = new File((filePath));
+
+        try {
+            FileWriter writer = new FileWriter(file);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+            Scanner userInput = new Scanner(System.in);
+            //date
+            bufferedWriter.write(String.valueOf(LocalDate.now()));
+            bufferedWriter.write("|");
+            //time
+            bufferedWriter.write(String.valueOf(LocalTime.now()));
+            bufferedWriter.write("|");
+            //description
+            System.out.println("Please enter what it was for: ");
+            userInput.next();
+            bufferedWriter.write(getDescription());
+            bufferedWriter.write("|");
+            //who
+            System.out.println("Please enter who deposited this amount: ");
+            userInput.next();
+            bufferedWriter.write(getVendor());
+            bufferedWriter.write("|");
+            //deposit
+            System.out.println("Please enter amount deposited: ");
+            userInput.nextDouble();
+            bufferedWriter.write(String.valueOf(getAmount()));
+            bufferedWriter.write("|");
+
+            System.out.println();
+            System.out.println("Information recorded");
+            bufferedWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void makePaymentScreen() {
@@ -252,7 +287,7 @@ public class ScreenPages {
     //Screens from ledger Screen
     public void allInfo() {
         //need to read transaction.csv
-            File file =new File("transactions.csv");
+        File file =new File("transactions.csv");
         try {
             Scanner fileScanner = new Scanner(file);
 
