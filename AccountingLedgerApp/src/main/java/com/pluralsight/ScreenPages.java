@@ -1,8 +1,8 @@
 package com.pluralsight;
 
 import java.io.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -57,6 +57,7 @@ public class ScreenPages {
             FileWriter writer = new FileWriter(file, true);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
             Scanner userInput = new Scanner(System.in);
+            bufferedWriter.newLine();
             //date
             bufferedWriter.write(String.valueOf(LocalDate.now()));
             bufferedWriter.write("|");
@@ -94,6 +95,7 @@ public class ScreenPages {
             FileWriter writer = new FileWriter(file, true);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
             Scanner userInput = new Scanner(System.in);
+            bufferedWriter.newLine();
             //date
             bufferedWriter.write(String.valueOf(LocalDate.now()));
             bufferedWriter.write("|");
@@ -189,6 +191,7 @@ public class ScreenPages {
         File file = new File("files/transactions.csv");
         try {
             Scanner fileScanner = new Scanner(file);
+            fileScanner.nextLine();
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine();
                 String[] deposits = line.split("\\|");
@@ -209,9 +212,10 @@ public class ScreenPages {
         File file = new File("files/transactions.csv");
         try {
             Scanner fileScanner = new Scanner(file);
+            fileScanner.nextLine();
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine();
-                String[] deposits = line.split("|");
+                String[] deposits = line.split("\\|");
                 double rows = Double.parseDouble(deposits[4].trim());
                 if (rows < 0){
                     System.out.println(line);
@@ -276,7 +280,37 @@ public class ScreenPages {
 
     // reports screen
     public static void monthToDateScreen() {
-        System.out.println("test");
+        System.out.println();
+        try {
+            String filePath = "Files/transactions.csv";
+            File file = new File((filePath));
+            Scanner fileScanner = new Scanner(file);
+
+            //check local date
+            LocalDate today =  LocalDate.now();
+            Month month = today.getMonth();
+            int currentYear = today.getYear();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            //Stop the header from being added
+            fileScanner.hasNextLine();
+            //search file for current month/day/year and print it out.
+            while (fileScanner.hasNextLine()){
+                String line = fileScanner.nextLine();
+                String[] parts = line.split("\\|");
+                String dateString = parts[0];
+                LocalDate monthToDate = LocalDate.parse(dateString,formatter);
+                if (monthToDate.getMonth() == month && monthToDate.getYear() == currentYear){
+                    System.out.println("Month to date"+ dateString);
+                    System.out.println("-".repeat(40));
+                }
+            }
+            fileScanner.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     public static void previousMonthScreen() {
