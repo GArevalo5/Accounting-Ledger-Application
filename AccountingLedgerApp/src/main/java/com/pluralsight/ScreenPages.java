@@ -19,9 +19,8 @@ public class ScreenPages {
         Scanner userInput = new Scanner(System.in);
         while (true) {
             try {
-                System.out.println("Welcome!");
+                System.out.println("---------Welcome!--------");
                 System.out.println(
-                        "  ______ ______\n" +
                                 "    _/      Y      \\_\n" +
                                 "   // ~~ ~~ | ~~ ~  \\\\\n" +
                                 "  // ~ ~ ~~ | ~~~ ~~ \\\\      \n" +
