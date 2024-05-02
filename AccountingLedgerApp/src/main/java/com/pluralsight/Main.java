@@ -5,6 +5,5 @@ public class Main {
         //load app
         new ScreenPages();
 
-
     }
 }
