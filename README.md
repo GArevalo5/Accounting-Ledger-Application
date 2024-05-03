@@ -45,3 +45,6 @@ Home Screen finished, Ledger Screen finished and Reports screen are finished. fi
 known bugs or errors: 
 -Deposit and payment making a extra blank line in the csv file after entering user information.Found 9:30AM (fixed 5-2-24 10:33AM)
 -on the main screens if you enter something other than a number to go to another screen, It'll get mad and start repeating the screen over and over again. found 11:50pm
+
+5-3-24
+bugs or errors: -Will break if csv file has a blank space or a extra line (Soultion: if for some reason a space is left just delete from the csv file. Know not the best soultion ,but is what works for it).
